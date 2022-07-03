@@ -1,0 +1,14 @@
+version: "3"
+services:
+  next.js:
+    build:
+      context: ./frontend
+      dockerfile: frontend/frontend.Dockerfile
+    ports:
+      - "3000:3000"
+  django:
+    build:
+      context: backend
+      dockerfile: backend/backend.Dockerfile
+    ports:
+      - "8000:8000"
