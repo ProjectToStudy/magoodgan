@@ -24,9 +24,19 @@
     "react/react-in-jsx-scope": 0,
     "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
     "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/jsx-indent" : ["error", 4],
     "arrow-body-style": ["error", "always"],
     "indent": ["error", 4],
-    "react/jsx-indent" : ["error", 4]
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+   ]
   },
   "settings": {
     "import/resolver": {
