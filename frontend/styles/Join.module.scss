@@ -1,0 +1,50 @@
+.content {
+  gap: 45px;
+  padding: 48px 40px;
+}
+
+.row_group, .row {
+  display: flex;
+  flex-direction: column;
+}
+.row_group {
+  gap: 40px;
+}
+.row {
+  gap: 12px;
+
+  & input {
+    width: 100%;
+    height: 60px;
+    padding: 16px;
+    border: 1px solid var(--gray-03);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    &:focus {
+      outline: none;
+    }
+    &.focus {
+      border: 1px solid #5D5FEF;
+    }
+  }
+}
+
+.title_row {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28px;
+  color: var(--gray-07);
+}
+
+.submit {
+  width: 192px;
+  height: 52px;
+  padding: 12px 16px;
+  border: none;
+  background-color: var(--gray-04);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 28px;
+  color: white;
+}

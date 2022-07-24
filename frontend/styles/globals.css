@@ -11,6 +11,36 @@ a {
   text-decoration: none;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
 * {
   box-sizing: border-box;
+}
+
+:root {
+  --gray-01: #F2F5F7;
+  --gray-02: #E6E8EB;
+  --gray-03: #C6CACF;
+  --gray-04: #A6AAAD;
+  --gray-05: #87898C;
+  --gray-06: #6E7073;
+  --gray-07: #565759;
+  --gray-08: #3C3E3F;
+  --gray-09: #2C2D2E;
+  --gray-10: #18191A;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 360px;
+  max-width: 1024px;
+  font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
 }
