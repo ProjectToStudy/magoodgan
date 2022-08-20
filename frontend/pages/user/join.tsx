@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
-import JoinComponent from '../../components/user/Join';
+import JoinContainer from '../../containers/user/Join';
 
 const Join: NextPage = () => {
     return (
@@ -8,7 +8,7 @@ const Join: NextPage = () => {
             <Head>
                 <title>회원가입 | 이문세의 마굿간</title>
             </Head>
-            <JoinComponent />
+            <JoinContainer />
         </div>
     );
 };

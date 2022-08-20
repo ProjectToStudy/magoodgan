@@ -1,13 +1,20 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next';
+import { JoinDuplicatedBody } from '../../types/join';
 
-type Data = {
-  name: string
-}
-
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
-}
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+    if (req.method === 'POST') {
+        const { body }: {
+          body: JoinDuplicatedBody;
+        } = req;
+        const { userId, email } = body;
+        if (userId) {
+            res.statusCode = 200;
+            return res.send(body);
+        }
+        if (email) {
+            res.statusCode = 409;
+            return res.send('이미 가입한 이메일입니다.');
+        }
+    }
+    return res.end();
+};
