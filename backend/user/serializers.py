@@ -1,3 +1,5 @@
+import smtplib
+
 from rest_framework import serializers
 from rest_framework.serializers import raise_errors_on_nested_writes
 from rest_framework.validators import UniqueValidator
@@ -8,8 +10,8 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     uid = serializers.CharField(validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(allow_null=True, write_only=True)
-    name = serializers.CharField()
-    nickname = serializers.CharField(validators=[UniqueValidator(queryset=User.objects.all())])
+    name = serializers.CharField(required=False)
+    nickname = serializers.CharField(required=False, validators=[UniqueValidator(queryset=User.objects.all())])
     email = serializers.EmailField(validators=[UniqueValidator(queryset=User.objects.all())])
     contact = serializers.CharField(required=False, allow_null=True)
     residence = serializers.CharField(required=False, allow_null=True)
@@ -33,4 +35,3 @@ class UserSerializer(serializers.ModelSerializer):
         ModelClass = self.Meta.model
         instance = ModelClass._default_manager.create_user(**validated_data)
         return instance
-

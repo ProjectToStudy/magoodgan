@@ -16,7 +16,7 @@ import uuid
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, uid, name, nickname, email, mailing, message, contact=None, residence=None, homepage=None,
+    def create_user(self, uid, email, mailing, message, name=None, nickname=None, contact=None, residence=None, homepage=None,
                     blog=None, birth=None, job=None, profile=None, social=None, password=None):
         user = self.model(
             uid=uid, name=name, nickname=nickname, email=UserManager.normalize_email(email), contact=contact,
@@ -105,37 +105,3 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.profile = temp
         super().save(*args, **kwargs)
 
-
-class EmailVerification(TimeStampedModel):
-    email = models.EmailField(verbose_name='email', primary_key=True, max_length=30)
-    verification_code = models.IntegerField(verbose_name='verification code')
-
-    class Meta:
-        db_table = 'email_verification'
-
-    def save(self, *args, **kwargs):
-        self.verification_code = randint(1000, 10000)
-        super().save(*args, **kwargs)
-        self.send_mail()
-
-    def send_mail(self):
-        send_mail(
-            'email verification code',
-            f'verification code: {self.verification_code}',
-            settings.EMAIL_HOST_USER,
-            [self.email],
-            fail_silently=False,
-        )
-
-    @classmethod
-    def check_verification_code(cls, email, verification_code):
-        time_limit = timezone.now() - datetime.timedelta(minutes=3)
-        is_match = cls.objects.filter(email=email, verification_code=verification_code)
-
-        if is_match:
-            if is_match.filter(modified__gte=time_limit):
-                return 'ok'
-            else:
-                return 'expired'
-        else:
-            return 'does_not_match'
