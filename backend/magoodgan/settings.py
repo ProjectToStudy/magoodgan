@@ -86,7 +86,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'frontend', 'build')
+            os.path.join(BASE_DIR.parent, 'frontend', 'build')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -100,9 +100,9 @@ TEMPLATES = [
     },
 ]
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'frontend', 'build', 'static')
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR.parent, 'frontend', 'build', 'static')
+]
 
 WSGI_APPLICATION = 'magoodgan.wsgi.application'
 
