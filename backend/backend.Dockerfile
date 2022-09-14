@@ -1,6 +1,7 @@
 FROM python:3.9
 
 COPY . /backend
+COPY ./secret.json /backend
 WORKDIR /backend
 
 RUN pip install poetry
