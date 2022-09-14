@@ -12,3 +12,13 @@ services:
       dockerfile: backend.Dockerfile
     ports:
       - "8000:8000"
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: nginx.Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - django
+    links:
+      - django
