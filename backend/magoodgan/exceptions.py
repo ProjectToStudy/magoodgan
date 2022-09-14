@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.exceptions import APIException
 from rest_framework.views import exception_handler
 
@@ -37,3 +38,15 @@ def custom_exception_handler(exc, context):
         response.data = data
 
     return response
+
+
+class ActivateException(APIException):
+    status_code = status.HTTP_409_CONFLICT
+    default_detail = 'This user is already activated.'
+    default_code = 'conflict'
+
+
+class NeedsAgreementException(APIException):
+    status_code = status.HTTP_401_UNAUTHORIZED
+    default_detail = 'Agree to Terms of Service & Privacy Policy & Terms of Location-Based Services.'
+    default_code = 'needs_agreement'
