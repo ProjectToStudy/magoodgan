@@ -32,6 +32,7 @@ class ActivateUser(LoginMixin, GenericAPIView):
     serializer_class = ActivateSerializer
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema()
     def get(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=kwargs)
         serializer.is_valid(raise_exception=True)
@@ -45,6 +46,7 @@ class ActivateUser(LoginMixin, GenericAPIView):
 class KakaoLogin(GenericAPIView):
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema()
     def get(self, request, *args, **kwargs):
         url = 'https://kauth.kakao.com/oauth/authorize'
         client_id = 'ce696f5a464cf2d45d2b8c9a68816b0b'
@@ -59,6 +61,7 @@ class KakaoCallback(SocialLoginCallback):
     serializer_class = SocialLoginSerializer
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema()
     def get(self, request, *args, **kwargs):
         code = request.query_params.get('code', None)
         client_id = 'ce696f5a464cf2d45d2b8c9a68816b0b'
