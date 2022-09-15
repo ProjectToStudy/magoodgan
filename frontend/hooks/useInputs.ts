@@ -9,7 +9,7 @@ interface Action {
     }
 }
 
-const reducer = (state: object, action: Action) => {
+const reducer = (state: object, action: Action): any => {
     switch (action.type) {
     case 'CHANGE':
         return {
