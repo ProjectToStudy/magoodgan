@@ -4,8 +4,9 @@ interface Action {
     type: string;
     value: {
         name: string;
-        value: string;
-        classList: any
+        value?: string;
+        id: string;
+        classList: any;
     }
 }
 
@@ -16,9 +17,11 @@ const reducer = (state: object, action: Action): any => {
             ...state,
             [action.value.name]: action.value.value,
         };
-    case 'FOCUS':
-        action.value.classList.add('focus');
-        return state;
+    case 'CLICK':
+        return {
+            ...state,
+            [action.value.id]: '',
+        };
     // no default
     }
 };
@@ -26,8 +29,8 @@ const reducer = (state: object, action: Action): any => {
 const useInputs = (initialForm: object) => {
     const [state, dispatch] = useReducer(reducer, initialForm);
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => { dispatch({ type: 'CHANGE', value: e.target }); };
-    const onFocus = (e: React.FocusEvent<HTMLInputElement>) => { dispatch({ type: 'FOCUS', value: e.target }); };
-    return [state, onChange, onFocus];
+    const onDeleteBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => { dispatch({ type: 'CLICK', value: (e.target as HTMLButtonElement) }); };
+    return [state, onChange, onDeleteBtnClick];
 };
 
 export default useInputs;

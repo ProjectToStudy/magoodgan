@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { joinDuplicatedAPI } from '../../lib/api/join';
 import useInputs from '../../hooks/useInputs';
@@ -7,7 +7,7 @@ import JoinComponent from '../../components/user/Join';
 const duplicated = async (name: string, value:string) => {
     try {
         const res = await joinDuplicatedAPI({ [name]: value });
-        return false;
+        return res.statusText;
     } catch (e) {
         console.log(e);
     }
@@ -18,24 +18,16 @@ const validation = (name: string, value: string, value2?: string) => {
     const pwdRegExp = /^[a-z0-9]{4,}$/;
     const emailRegExp = /^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
 
-    switch (name) {
-    case 'userId':
+    if (name === 'userId') {
         if (idRegExp.test(value)) return duplicated(name, value);
-        break;
-    case 'password':
-        return pwdRegExp.test(value);
-    case 'confirmPassword':
-        return (value === value2);
-    case 'email':
+    } else if (name === 'email') {
         if (emailRegExp.test(value)) return duplicated(name, value);
-        break;
-    default:
-        return false;
-    }
+    } else if (name === 'password') return pwdRegExp.test(value);
+    else if (name === 'confirmPassword') return (value !== '' && value === value2);
 };
 
 const JoinContainer: NextPage = () => {
-    const [state, onChange, onFocus] = useInputs({
+    const [state, onChange, onDeleteBtnClick] = useInputs({
         userId: '',
         password: '',
         confirmPassword: '',
@@ -51,7 +43,19 @@ const JoinContainer: NextPage = () => {
         email: '',
     });
 
-    const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const [isValid, setIsValid] = useState({
+        userId: false,
+        password: false,
+        confirmPassword: false,
+        email: false,
+    });
+
+    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+        e.target.classList.add('active');
+        setIsValid({ ...isValid, [e.target.name]: false });
+    };
+
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         const { name, value, classList } = e.target;
         classList.remove('focus', 'error');
 
@@ -59,24 +63,39 @@ const JoinContainer: NextPage = () => {
         if (name === 'confirmPassword') result = validation(name, value, password);
         else result = validation(name, value);
 
-        if (!result) {
+        if (typeof (result) === 'object') {
+            result.then((r) => {
+                if (r !== 'OK') {
+                    if (name === 'userId') setErrors({ ...errors, [name]: '중복된 아이디입니다.' });
+                    else if (name === 'email') setErrors({ ...errors, [name]: '중복된 이메일입니다.' });
+                } else setIsValid({ ...isValid, [name]: true });
+            });
+        } else if (!result) {
             if (name === 'userId') setErrors({ ...errors, [name]: '3~20자 이내로 입력해 주세요.' });
-            else if (name === 'password') setErrors({ ...errors, [name]: '4자 이상 입력해 주세요.' });
-            else if (name === 'confirmPassword') setErrors({ ...errors, [name]: '비밀번호를 다시 입력해 주세요.' });
-            else if (name === 'email') setErrors({ ...errors, [name]: '올바른 이메일을 입력해 주세요.' });
+            if (name === 'password') setErrors({ ...errors, [name]: '4자 이상 입력해 주세요.' });
+            if (name === 'confirmPassword') setErrors({ ...errors, [name]: '비밀번호를 다시 입력해 주세요.' });
+            if (name === 'email') setErrors({ ...errors, [name]: '올바른 이메일을 입력해 주세요.' });
             classList.add('error');
-        } else setErrors({ ...errors, [name]: '' });
+        } else {
+            setErrors({ ...errors, [name]: '' });
+            setIsValid({ ...isValid, [name]: true });
+        }
     };
 
     return (
         <JoinComponent
             items={{
-                userIdItem: { value: userId, onChange, onFocus, onBlur },
-                passwordItem: { type: 'password', value: password, onChange, onFocus, onBlur },
-                confirmPasswordItem: { type: 'password', value: confirmPassword, onChange, onFocus, onBlur },
-                emailItem: { type: 'email', value: email, onChange, onFocus, onBlur },
+                userIdItem: { value: userId, placeholder: '3~20자 이내로 입력해 주세요.' },
+                passwordItem: { type: 'password', value: password, placeholder: '4자 이상 입력해 주세요.' },
+                confirmPasswordItem: { type: 'password', value: confirmPassword, placeholder: '비밀번호를 다시 입력해 주세요.' },
+                emailItem: { type: 'email', value: email, placeholder: '이메일을 입력해 주세요.' },
             }}
             errors={errors}
+            isValid={isValid}
+            onChange={onChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onDeleteBtnClick={onDeleteBtnClick}
         />
     );
 };

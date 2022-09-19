@@ -1,24 +1,33 @@
 import React from 'react';
 
+interface InputProps {
+    type?: string;
+    value: string;
+    placeholder: string;
+}
+
 export type InputComponentProps = {
     title: string;
     name: string;
     item: {
         type?: string;
         value: string;
+        placeholder: string;
         onChange(): void;
-        onFocus(): void;
+        onFocus(e: React.FocusEvent<HTMLInputElement>): void;
         onBlur(e: React.FocusEvent<HTMLInputElement>): void;
     };
     error: string;
+    isValid: boolean;
+    onDelClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export type JoinComponentProps = {
     items: {
-        userIdItem: InputComponentProps['item'];
-        passwordItem: InputComponentProps['item'];
-        confirmPasswordItem: InputComponentProps['item'];
-        emailItem: InputComponentProps['item'];
+        userIdItem: InputProps;
+        passwordItem: InputProps;
+        confirmPasswordItem: InputProps;
+        emailItem: InputProps;
     };
     errors: {
         userId: string;
@@ -26,6 +35,16 @@ export type JoinComponentProps = {
         confirmPassword: string;
         email: string;
     };
+    isValid: {
+        userId: boolean;
+        password: boolean;
+        confirmPassword: boolean;
+        email: boolean;
+    }
+    onChange(): void;
+    onFocus(e: React.FocusEvent<HTMLInputElement>): void;
+    onBlur(e: React.FocusEvent<HTMLInputElement>): void;
+    onDeleteBtnClick: InputComponentProps['onDelClick'];
 }
 
 export type JoinDuplicatedBody = {

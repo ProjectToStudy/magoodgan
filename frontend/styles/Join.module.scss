@@ -19,11 +19,22 @@
   gap: 12px;
   position: relative;
   width: 100%;
-
+}
+.title_row {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28px;
+  color: var(--gray-07);
+}
+.input_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   & input {
     width: 100%;
     height: 60px;
-    padding: 16px;
+    padding: 16px 48px 16px 16px;
     border: 1px solid var(--gray-03);
     font-size: 16px;
     font-weight: 400;
@@ -38,13 +49,20 @@
       border: 1px solid #EF5D5D;
     }
   }
-}
-
-.title_row {
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 28px;
-  color: var(--gray-07);
+  & button {
+    position: absolute;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-size: 24px;
+  }
+  & button[name=erase] {
+    background: url("/images/erase_text.svg");
+  }
+  & button[name=check] {
+    background: url("/images/check_black.svg");
+  }
 }
 .error_row {
   position: absolute;
