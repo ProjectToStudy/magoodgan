@@ -111,6 +111,19 @@
   dependencies:
     "tslib" "^2.4.0"
 
+"@tanstack/query-core@4.3.8":
+  "integrity" "sha512-AEUWtCNBIImFZ9tMt/P8V86kIhMHpfoJqAI1auGOLR8Wzeq7Ymiue789PJG0rKYcyViUicBZeHjggMqyEQVMfQ=="
+  "resolved" "https://registry.npmjs.org/@tanstack/query-core/-/query-core-4.3.8.tgz"
+  "version" "4.3.8"
+
+"@tanstack/react-query@^4.3.9":
+  "integrity" "sha512-odfDW6WiSntCsCh+HFeJtUys3UnVOjfJMhykAtGtYvcklMyyDmCv9BVBt5KlSpbk/qW3kURPFCDapO+BFUlCwg=="
+  "resolved" "https://registry.npmjs.org/@tanstack/react-query/-/react-query-4.3.9.tgz"
+  "version" "4.3.9"
+  dependencies:
+    "@tanstack/query-core" "4.3.8"
+    "use-sync-external-store" "^1.2.0"
+
 "@types/hoist-non-react-statics@^3.3.1":
   "integrity" "sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA=="
   "resolved" "https://registry.npmjs.org/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz"
@@ -1617,7 +1630,7 @@
   "resolved" "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   "version" "1.2.3"
 
-"react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^17.0.2 || ^18.0.0-0", "react-dom@18.2.0":
+"react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^18.0.0-0", "react-dom@18.2.0":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -1941,6 +1954,11 @@
   "integrity" "sha512-SEnieB2FPKEVne66NpXPd1Np4R1lTNKfjuy3XdIoPQKYBAFdzbzSZlSn1KJZUiihQLQC5Znot4SBz1EOTBwQAQ=="
   "resolved" "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.1.0.tgz"
   "version" "1.1.0"
+
+"use-sync-external-store@^1.2.0":
+  "integrity" "sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA=="
+  "resolved" "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz"
+  "version" "1.2.0"
 
 "v8-compile-cache@^2.0.3":
   "integrity" "sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA=="
