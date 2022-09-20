@@ -1,4 +1,4 @@
-import PostList from './molecule/PostList';
+import PostList from './organisms/PostList';
 
 const NoticeComponent = () => {
     return (
