@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { joinDuplicatedAPI } from '../../lib/api/join';
 import useInputs from '../../hooks/useInputs';
@@ -66,12 +66,12 @@ const JoinContainer: NextPage = () => {
         if (typeof (result) === 'object') {
             result.then((r) => {
                 if (r !== 'OK') {
-                    if (name === 'userId') setErrors({ ...errors, [name]: '중복된 아이디입니다.' });
-                    else if (name === 'email') setErrors({ ...errors, [name]: '중복된 이메일입니다.' });
+                    if (name === 'userId') setErrors({ ...errors, [name]: '이미 사용중인 아이디에요.' });
+                    else if (name === 'email') setErrors({ ...errors, [name]: '이미 가입된 이메일이에요.' });
                 } else setIsValid({ ...isValid, [name]: true });
             });
         } else if (!result) {
-            if (name === 'userId') setErrors({ ...errors, [name]: '3~20자 이내로 입력해 주세요.' });
+            if (name === 'userId') setErrors({ ...errors, [name]: '3~20자 이내의 영문, 숫자, _만 사용해서 입력해 주세요.' });
             if (name === 'password') setErrors({ ...errors, [name]: '4자 이상 입력해 주세요.' });
             if (name === 'confirmPassword') setErrors({ ...errors, [name]: '비밀번호를 다시 입력해 주세요.' });
             if (name === 'email') setErrors({ ...errors, [name]: '올바른 이메일을 입력해 주세요.' });
