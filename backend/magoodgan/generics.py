@@ -1,31 +1,32 @@
 import copy
 
+from django.db.models import QuerySet
 from rest_framework.generics import GenericAPIView, get_object_or_404
 
-from magoodgan.exceptions import NeedsAgreementException
-from magoodgan.mixins import LoginMixin
+from .exceptions import NeedsAgreementException
+from .mixins import LoginMixin
 from user.models import User
 from user.serializers import UserSerializer
 
 
 class CustomGenericAPIView(GenericAPIView):
-    action = None
+    event = None
     lookup_kwargs = None
     path_segment = None
 
     def get_lookup_kwargs(self):
         kwargs = copy.deepcopy(self.kwargs)
-        if self.lookup_kwargs[self.action] and self.lookup_kwargs[self.action] not in kwargs:
-            kwargs[self.lookup_kwargs[self.action]] = kwargs.pop(self.path_segment)
+        if self.lookup_kwargs[self.event] and self.lookup_kwargs[self.event] not in kwargs:
+            kwargs[self.lookup_kwargs[self.event]] = kwargs.pop(self.path_segment)
         return kwargs
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
 
-        if not isinstance(self.lookup_field[self.action], list):
-            self.lookup_field[self.action] = [self.lookup_field[self.action]]
+        if not isinstance(self.lookup_field[self.event], list):
+            self.lookup_field[self.event] = [self.lookup_field[self.event]]
         filter_kwargs = dict()
-        for i in self.lookup_field[self.action]:
+        for i in self.lookup_field[self.event]:
             assert i in self.request.data or self.kwargs, (
                     'Expected view %s to be called with a URL keyword argument '
                     'named "%s". Fix your URL conf, or set the `.lookup_field` '
@@ -45,13 +46,13 @@ class CustomGenericAPIView(GenericAPIView):
         return obj
 
 
-class SocialLoginCallback(LoginMixin, CustomGenericAPIView):
+class SocialLoginCallback(LoginMixin, GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         pass
 
     def preprocess_login(self, request, *args, **kwargs):
-        self.action = 'login'
+        self.event = 'login'
         try:
             serializer = self.get_serializer(data=kwargs, context=self.get_serializer_context())
             serializer.is_valid(raise_exception=True)

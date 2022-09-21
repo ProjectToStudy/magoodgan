@@ -2,8 +2,11 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework.serializers import raise_errors_on_nested_writes
 from rest_framework.validators import UniqueValidator
+from rest_framework_simplejwt.exceptions import TokenError
+from rest_framework_simplejwt.tokens import UntypedToken, RefreshToken
 
 from .models import User
+from magoodgan.exceptions import NeedsAgreementException, ActivateException
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -82,3 +85,29 @@ class ActivateSerializer(serializers.Serializer):
         if user.is_active:
             raise ActivateException
         return attrs
+
+
+class TokenCheckSerializer(serializers.Serializer):
+    access_token = serializers.CharField(required=True)
+    refresh_token = serializers.CharField(required=True)
+    token_class = RefreshToken
+
+    def validate(self, attrs):
+        if attrs['access_token'] == 'reload':
+            try:
+                refresh = self.token_class(attrs['refresh_token'])
+            except TokenError:
+                raise serializers.ValidationError('The refresh token has expired or is not valid.')
+            access_token = str(refresh.access_token)
+        else:
+            access_token = UntypedToken(attrs['access_token'])
+        token_type = access_token.payload['token_type']
+        user_id = access_token.payload['user_id']
+        user = User.objects.get(id=user_id)
+        return {
+            'code': 'ok',
+            'access_token': access_token.token,
+            'token_type': token_type,
+            'uuid': user.uuid,
+            'email': user.email,
+        }

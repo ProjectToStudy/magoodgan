@@ -4,6 +4,7 @@ from django.contrib.auth.models import update_last_login
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from user.models import User
 
 
@@ -17,7 +18,7 @@ class LoginMixin:
     }
 
     def preprocess_login(self, request, *args, **kwargs):
-        self.action = 'login'
+        self.event = 'login'
         return self.login(request, *args, **kwargs)
 
     def get_user(self, request, *args, **kwargs):
@@ -57,7 +58,7 @@ class LoginMixin:
         self.default_login_response['uuid'] = user.uuid
         self.default_login_response['email'] = user.email
 
-        if self.action == 'create':
+        if self.event == 'create':
             response = Response(data=self.default_login_response, status=status.HTTP_201_CREATED)
         else:
             response = Response(data=self.default_login_response, status=status.HTTP_200_OK)

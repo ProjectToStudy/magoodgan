@@ -6,6 +6,7 @@ from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = os.path.dirname(BASE_DIR)
 
 secret_file = os.path.join(BASE_DIR, 'secret.json')
 
@@ -39,7 +40,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     '0.0.0.0',
-    'magoodgan.p-e.kr'
+    'magoodgan.p-e.kr',
 ]
 
 
@@ -77,6 +78,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:8000',
     'http://0.0.0.0:8000',
     'http://0.0.0.0:3000',
+    'https://magoodgan.p-e.kr:8000',
+    'https://magoodgan.p-e.kr:3000',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -87,7 +90,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR.parent, 'frontend', 'build')
+            BASE_DIR / 'templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -101,9 +104,9 @@ TEMPLATES = [
     },
 ]
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR.parent, 'frontend', 'build', 'static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
 
 WSGI_APPLICATION = 'magoodgan.wsgi.application'
 

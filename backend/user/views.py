@@ -3,18 +3,18 @@ import datetime
 import requests
 from django.shortcuts import redirect
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
-from magoodgan.generics import SocialLoginCallback
+from magoodgan.generics import SocialLoginCallback, CustomGenericAPIView
 from magoodgan.mixins import LoginMixin
-from utils import preprocess_profile
+from magoodgan.utils import preprocess_profile
 from .models import User
-from .serializers import UserSerializer, ActivateSerializer, SocialLoginSerializer
-
-URL = 'http://127.0.0.1:8000'
+from .serializers import UserSerializer, ActivateSerializer, SocialLoginSerializer, TokenCheckSerializer
 
 
 class ManageUsers(CreateModelMixin, GenericAPIView):
@@ -60,12 +60,13 @@ class KakaoLogin(GenericAPIView):
 class KakaoCallback(SocialLoginCallback):
     serializer_class = SocialLoginSerializer
     permission_classes = [AllowAny]
+    parser_classes = (MultiPartParser,)
 
     @swagger_auto_schema()
     def get(self, request, *args, **kwargs):
         code = request.query_params.get('code', None)
         client_id = 'ce696f5a464cf2d45d2b8c9a68816b0b'
-        redirect_uri = URL + '/member/login/kakao'
+        redirect_uri = request.get_host() + '/member/login/kakao'
         token_url = 'https://kauth.kakao.com/oauth/token'
 
         parameter = {
@@ -133,3 +134,22 @@ class KakaoCallback(SocialLoginCallback):
         }
 
         return self.preprocess_login(request, *args, **kwargs)
+
+
+class CheckToken(CustomGenericAPIView):
+    serializer_class = TokenCheckSerializer
+    permission_classes = [AllowAny]
+
+    def check(self, request, *args, **kwargs):
+        print(request.get_host())
+        if kwargs.get('access_token'):
+            data = {**kwargs, **request.COOKIES}
+        else:
+            data = {**request.data, **request.COOKIES}
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        return Response(data=serializer.validated_data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema()
+    def post(self, request, *args, **kwargs):
+        return self.check(request, *args, **kwargs)
