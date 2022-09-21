@@ -1,24 +1,26 @@
 version: "3"
 services:
-  next.js:
+  next:
     build:
       context: ./frontend
       dockerfile: frontend.Dockerfile
-    ports:
-      - "3000:3000"
+    image: next-image
+    container_name: next
   django:
     build:
       context: ./backend
       dockerfile: backend.Dockerfile
-    ports:
-      - "8000:8000"
+    image: django-image
+    container_name: django
   nginx:
     build:
       context: ./nginx
       dockerfile: nginx.Dockerfile
+    image: nginx-image
+    container_name: nginx
     ports:
-      - "80:80"
+      - "80:80/tcp"
     depends_on:
-      - django
+      - next
     links:
-      - django
+      - next
