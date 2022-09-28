@@ -8,11 +8,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.50'
-          memory: 512M
-        reservations:
           cpus: '0.25'
-          memory: 128M
+          memory: 1282M
+        reservations:
+          cpus: '0.125'
+          memory: 64M
     container_name: next
   django:
     build:
@@ -22,11 +22,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.50'
-          memory: 512M
-        reservations:
           cpus: '0.25'
-          memory: 128M
+          memory: 1282M
+        reservations:
+          cpus: '0.125'
+          memory: 64M
     container_name: django
   nginx:
     build:
@@ -36,11 +36,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.50'
-          memory: 512M
-        reservations:
           cpus: '0.25'
-          memory: 128M
+          memory: 1282M
+        reservations:
+          cpus: '0.125'
+          memory: 64M
     container_name: nginx
     ports:
       - "80:80/tcp"
