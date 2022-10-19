@@ -4,8 +4,8 @@
         "es2021": true
     },
     "extends": [
-        "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "plugin:react/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -29,6 +29,7 @@
         "object-curly-newline": 0,
         "arrow-body-style": 0,
         "jsx-a11y/control-has-associated-label": 0,
+        "jsx-a11y/anchor-is-valid": 0,
         "react/react-in-jsx-scope": 0,
         "react/prop-types": 0,
         "react/jsx-props-no-spreading": 0,
