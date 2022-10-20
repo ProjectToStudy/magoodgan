@@ -78,8 +78,10 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:8000',
     'http://0.0.0.0:8000',
     'http://0.0.0.0:3000',
-    'https://magoodgan.p-e.kr:8000',
-    'https://magoodgan.p-e.kr:3000',
+    'http://magoodgan.p-e.kr:8000',
+    'http://magoodgan.p-e.kr:3000',
+    'http://localhost:3000',
+    'http://localhost:8000'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
