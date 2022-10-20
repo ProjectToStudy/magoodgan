@@ -28,6 +28,8 @@ services:
           cpus: '0.125'
           memory: 64M
     container_name: django
+    volumes:
+      - static:/magoodgan/.static_root/
   nginx:
     build:
       context: ./nginx
@@ -44,6 +46,8 @@ services:
     container_name: nginx
     ports:
       - "80:80/tcp"
+    volumes:
+      - static:/magoodgan/.static_root/
     depends_on:
       - next
     links:
