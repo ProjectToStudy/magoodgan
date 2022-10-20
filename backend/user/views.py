@@ -9,23 +9,29 @@ from rest_framework.mixins import CreateModelMixin
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 from magoodgan.generics import SocialLoginCallback, CustomGenericAPIView
-from magoodgan.mixins import LoginMixin
+from magoodgan.mixins import CheckMixin, LoginMixin
 from magoodgan.utils import preprocess_profile
 from .models import User
-from .serializers import UserSerializer, ActivateSerializer, SocialLoginSerializer, TokenCheckSerializer
+from .serializers import UserSerializer, ActivateSerializer, SocialLoginSerializer, TokenCheckSerializer, \
+    CheckIDSerializer
 
 
-class ManageUsers(CreateModelMixin, GenericAPIView):
+class UserViewSet(ModelViewSet):
     queryset = User.objects.all().order_by('id')
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
-    parser_classes = (MultiPartParser,)
 
-    @swagger_auto_schema()
+
+class CheckID(CheckMixin, GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = CheckIDSerializer
+    permission_classes = [AllowAny]
+
     def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+        return self.check(request, *args, **kwargs)
 
 
 class ActivateUser(LoginMixin, GenericAPIView):
@@ -50,7 +56,7 @@ class KakaoLogin(GenericAPIView):
     def get(self, request, *args, **kwargs):
         url = 'https://kauth.kakao.com/oauth/authorize'
         client_id = 'ce696f5a464cf2d45d2b8c9a68816b0b'
-        redirect_uri = URL + '/member/login/kakao'
+        redirect_uri = request.get_host() + '/member/login/kakao'
 
         request_uri = f"{url}?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}"
 
@@ -141,7 +147,6 @@ class CheckToken(CustomGenericAPIView):
     permission_classes = [AllowAny]
 
     def check(self, request, *args, **kwargs):
-        print(request.get_host())
         if kwargs.get('access_token'):
             data = {**kwargs, **request.COOKIES}
         else:

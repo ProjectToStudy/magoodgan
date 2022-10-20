@@ -1,4 +1,6 @@
 import datetime
+from collections import defaultdict
+
 from django.contrib.auth import user_logged_in
 from django.contrib.auth.models import update_last_login
 from rest_framework import status
@@ -6,6 +8,21 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from user.models import User
+
+
+class CheckMixin:
+    detail = defaultdict(lambda: 'It\'s available.')
+
+    def check(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(data=self.get_success_message(request, *args, **kwargs), status=status.HTTP_200_OK)
+
+    def get_success_message(self, request, *args, **kwargs):
+        message = dict()
+        message['code'] = 'ok'
+        message['detail'] = self.detail[self.__class__.__name__]
+        return message
 
 
 class LoginMixin:
