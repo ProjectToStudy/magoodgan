@@ -41,10 +41,11 @@ export type JoinComponentProps = {
         confirmPassword: boolean;
         email: boolean;
     }
-    onChange(): void;
-    onFocus(e: React.FocusEvent<HTMLInputElement>): void;
-    onBlur(e: React.FocusEvent<HTMLInputElement>): void;
+    onChange: () => void;
+    onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
     onDeleteBtnClick: InputComponentProps['onDelClick'];
+    onSubmitClick: () => void;
 }
 
 export type JoinDuplicatedBody = {
@@ -52,7 +53,7 @@ export type JoinDuplicatedBody = {
     email?: string;
 }
 export type JoinAPIBody = {
-    userId: string;
+    uid: string;
     password: string;
     email: string;
 }
