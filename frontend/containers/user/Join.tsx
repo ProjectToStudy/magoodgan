@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
-import { idDuplicatedPostAPI, joinPostAPI } from '../../modules/api/user';
-import { idDuplicatedState, joinState } from '../../modules/state/user';
+import { duplicatedPostAPI, joinPostAPI } from '../../modules/api/user';
+import { duplicatedState, joinState } from '../../modules/state/user';
 import useInputs from '../../hooks/useInputs';
 import JoinComponent from '../../components/user/Join';
 
@@ -23,9 +23,10 @@ const JoinContainer = () => {
 
     const { userId, password, confirmPassword, email } = state;
 
-    const idDuplicatedAPI = idDuplicatedPostAPI(userId);
+    const idDuplicatedAPI = duplicatedPostAPI('id', userId);
+    const emailDuplicatedAPI = duplicatedPostAPI('email', email);
     const joinAPI = joinPostAPI({ uid: userId, password, email });
-    const [idDuplicatedAPIState, _] = useRecoilState(idDuplicatedState);
+    const [duplicatedAPIState, _] = useRecoilState(duplicatedState);
     const [joinAPIState] = useRecoilState(joinState);
 
     const idRegExp = /^[a-z][a-z0-9_]{2,19}$/;
@@ -33,9 +34,17 @@ const JoinContainer = () => {
     const emailRegExp = /^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
 
     useEffect(() => {
-        if (idDuplicatedAPIState.success) setErrors({ ...errors, userId: '' });
-        if (idDuplicatedAPIState.fail) setErrors({ ...errors, userId: '이미 사용중인 아이디에요.' });
-    }, [idDuplicatedAPIState]);
+        if (duplicatedAPIState.id.success) {
+            setErrors({ ...errors, userId: '' });
+            setIsValid({ ...isValid, userId: true });
+        }
+        if (duplicatedAPIState.email.success) {
+            setErrors({ ...errors, email: '' });
+            setIsValid({ ...isValid, email: true });
+        }
+        if (duplicatedAPIState.id.fail) setErrors({ ...errors, userId: '이미 사용중인 아이디에요.' });
+        if (duplicatedAPIState.email.fail) setErrors({ ...errors, email: '이미 가입된 이메일이에요.' });
+    }, [duplicatedAPIState]);
 
     useEffect(() => {
         if (joinAPIState.success) router.push('/');
@@ -56,15 +65,30 @@ const JoinContainer = () => {
             else setErrors({ ...errors, [name]: '3~20자 이내의 영문, 숫자, _만 사용해서 입력해 주세요.' });
         } else if (name === 'password') {
             if (!pwdRegExp.test(value)) setErrors({ ...errors, [name]: '4자 이상 입력해 주세요.' });
-            else setErrors({ ...errors, [name]: '' });
+            else {
+                setErrors({ ...errors, [name]: '' });
+                setIsValid({ ...isValid, password: true });
+            }
         } else if (name === 'confirmPassword') {
             if (value !== password) setErrors({ ...errors, [name]: '비밀번호를 다시 입력해 주세요.' });
-            else setErrors({ ...errors, [name]: '' });
+            else {
+                setErrors({ ...errors, [name]: '' });
+                setIsValid({ ...isValid, confirmPassword: true });
+            }
         } else if (name === 'email') {
-            if (emailRegExp.test(value)) setErrors({ ...errors, [name]: '' });
-            // setErrors({ ...errors, [name]: '이미 가입된 이메일이에요.' });
+            if (emailRegExp.test(value)) emailDuplicatedAPI();
             else setErrors({ ...errors, [name]: '올바른 이메일을 입력해 주세요.' });
         }
+    };
+
+    const handleSubmitClick = () => {
+        let tmp = true;
+        for (const key in isValid) {
+            // @ts-ignore
+            if (!isValid[key]) tmp = false;
+        }
+        if (tmp) joinAPI();
+        else alert('작성 내용을 다시 확인해 주세요.');
     };
 
     return (
@@ -81,7 +105,7 @@ const JoinContainer = () => {
             onFocus={handleFocus}
             onBlur={handleBlur}
             onDeleteBtnClick={onDeleteBtnClick}
-            onSubmitClick={joinAPI}
+            onSubmitClick={handleSubmitClick}
         />
     );
 };

@@ -7,7 +7,6 @@ const axios = Axios.create({
 
 axios.interceptors.response.use(
     (res) => {
-        console.log(res);
         return res;
     },
     (err: AxiosError) => {

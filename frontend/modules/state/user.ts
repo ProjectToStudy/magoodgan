@@ -9,9 +9,12 @@ const initialState = {
     fail: null,
 };
 
-export const idDuplicatedState = atom<ApiState>({
-    key: 'idDuplicatedState',
-    default: initialState,
+export const duplicatedState = atom<{ id: ApiState, email: ApiState }>({
+    key: 'duplicatedState',
+    default: {
+        id: initialState,
+        email: initialState,
+    },
 });
 
 export const joinState = atom<ApiState>({
