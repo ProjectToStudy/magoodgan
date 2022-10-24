@@ -4,7 +4,7 @@ interface ApiState {
     success: any;
     fail: any;
 }
-const initialState = {
+export const initialState = {
     success: null,
     fail: null,
 };

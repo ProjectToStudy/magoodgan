@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { duplicatedPostAPI, joinPostAPI } from '../../modules/api/user';
-import { duplicatedState, joinState } from '../../modules/state/user';
+import { initialState, duplicatedState, joinState } from '../../modules/state/user';
 import useInputs from '../../hooks/useInputs';
 import JoinComponent from '../../components/user/Join';
 
@@ -26,8 +26,8 @@ const JoinContainer = () => {
     const idDuplicatedAPI = duplicatedPostAPI('id', userId);
     const emailDuplicatedAPI = duplicatedPostAPI('email', email);
     const joinAPI = joinPostAPI({ uid: userId, password, email });
-    const [duplicatedAPIState, _] = useRecoilState(duplicatedState);
-    const [joinAPIState] = useRecoilState(joinState);
+    const [duplicatedAPIState, setDuplicatedAPIState] = useRecoilState(duplicatedState);
+    const [joinAPIState, setJoinAPIState] = useRecoilState(joinState);
 
     const idRegExp = /^[a-z][a-z0-9_]{2,19}$/;
     const pwdRegExp = /^[a-z0-9]{4,}$/;
@@ -47,7 +47,11 @@ const JoinContainer = () => {
     }, [duplicatedAPIState]);
 
     useEffect(() => {
-        if (joinAPIState.success) router.push('/');
+        if (joinAPIState.success) {
+            setDuplicatedAPIState({ id: initialState, email: initialState });
+            setJoinAPIState(initialState);
+            router.push('/');
+        }
         if (joinAPIState.fail) alert('fail');
     }, [joinAPIState]);
 
