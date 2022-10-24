@@ -17,6 +17,14 @@ class CheckIDSerializer(serializers.ModelSerializer):
         fields = ('uid', )
 
 
+class CheckEmailSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(validators=[UniqueValidator(queryset=User.objects.all())])
+
+    class Meta:
+        model = User
+        fields = ('email', )
+
+
 class UserSerializer(serializers.ModelSerializer):
     uid = serializers.CharField(validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(allow_null=True, write_only=True)

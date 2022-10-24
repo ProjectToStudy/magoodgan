@@ -9,6 +9,7 @@ router.register('users', UserViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('users/id/check', CheckID.as_view()),
+    path('users/email/check', CheckEmail.as_view()),
     path('auth/activate/<uuid:user>', ActivateUser.as_view()),
     path('auth/login/check', CheckToken.as_view()),
     path('auth/login/kakao', KakaoCallback.as_view())
