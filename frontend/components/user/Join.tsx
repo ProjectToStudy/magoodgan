@@ -18,7 +18,8 @@ const InputComponent = ({ title, name, item, error, isValid, onDelClick }: Input
 };
 
 const JoinComponent: React.FunctionComponent<JoinComponentProps> = (props) => {
-    const { items, errors, isValid, onChange, onFocus, onBlur, onDeleteBtnClick } = props;
+    const { items, errors, isValid, onChange, onFocus, onBlur,
+        onDeleteBtnClick, onSubmitClick } = props;
     const { userIdItem, passwordItem, confirmPasswordItem, emailItem } = items;
 
     return (
@@ -57,7 +58,7 @@ const JoinComponent: React.FunctionComponent<JoinComponentProps> = (props) => {
                     isValid={isValid.email}
                     onDelClick={onDeleteBtnClick}
                 />
-                <button type="submit" name="submit" disabled className={styles.submit}>마굿간 가족되기</button>
+                <button type="submit" name="submit" onClick={onSubmitClick} className={styles.submit}>마굿간 가족되기</button>
             </div>
         </main>
     );

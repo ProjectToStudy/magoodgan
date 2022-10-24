@@ -1,3 +1,5 @@
-/backend/secret.json
+__pycache__
+.DS_Store
 .idea
+/backend/secret.json
 /backend/db.sqlite3
