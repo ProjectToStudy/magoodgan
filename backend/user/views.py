@@ -5,7 +5,6 @@ from django.shortcuts import redirect
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -16,7 +15,7 @@ from magoodgan.mixins import CheckMixin, LoginMixin
 from magoodgan.utils import preprocess_profile
 from .models import User
 from .serializers import UserSerializer, ActivateSerializer, SocialLoginSerializer, TokenCheckSerializer, \
-    CheckIDSerializer
+    CheckIDSerializer, CheckEmailSerializer
 
 
 class UserViewSet(ModelViewSet):
@@ -28,6 +27,15 @@ class UserViewSet(ModelViewSet):
 class CheckID(CheckMixin, GenericAPIView):
     queryset = User.objects.all()
     serializer_class = CheckIDSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        return self.check(request, *args, **kwargs)
+
+
+class CheckEmail(CheckMixin, GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = CheckEmailSerializer
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
