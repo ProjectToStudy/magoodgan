@@ -10,9 +10,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from magoodgan.generics import SocialLoginCallback, CustomGenericAPIView
-from magoodgan.mixins import CheckMixin, LoginMixin
-from magoodgan.utils import preprocess_profile
+from common.generics import SocialLoginCallback, CustomGenericAPIView
+from common.mixins import CheckMixin, LoginMixin
+from common.utils import preprocess_profile
 from .models import User
 from .serializers import UserSerializer, ActivateSerializer, SocialLoginSerializer, TokenCheckSerializer, \
     CheckIDSerializer, CheckEmailSerializer

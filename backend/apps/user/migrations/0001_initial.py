@@ -3,7 +3,7 @@
 from django.db import migrations, models
 import django.utils.timezone
 import model_utils.fields
-import user.models
+import apps.user.models
 import uuid
 
 
@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
                 ('blog', models.URLField(null=True)),
                 ('birth', models.DateField(null=True)),
                 ('job', models.CharField(max_length=10, null=True)),
-                ('profile', models.ImageField(null=True, upload_to=user.models.image_path)),
+                ('profile', models.ImageField(null=True, upload_to=apps.user.models.image_path)),
                 ('social', models.CharField(max_length=6, null=True)),
                 ('mailing', models.BooleanField(default=False)),
                 ('message', models.CharField(choices=[('OPN', 'allow all'), ('LMT', 'friend only'), ('CLS', 'disallow')], default='ALL', max_length=3)),

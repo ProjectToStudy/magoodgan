@@ -1,12 +1,10 @@
 import copy
 
-from django.db.models import QuerySet
 from rest_framework.generics import GenericAPIView, get_object_or_404
-
+from apps.user.models import User
+from apps.user.serializers import UserSerializer
 from .exceptions import NeedsAgreementException
 from .mixins import LoginMixin
-from user.models import User
-from user.serializers import UserSerializer
 
 
 class CustomGenericAPIView(GenericAPIView):

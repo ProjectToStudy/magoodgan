@@ -5,8 +5,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.core.exceptions import ImproperlyConfigured
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-ROOT_DIR = os.path.dirname(BASE_DIR)
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 secret_file = os.path.join(BASE_DIR, 'secret.json')
 
@@ -59,7 +58,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'storages',
     #
-    'user',
+    'apps.user',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +85,7 @@ CORS_ORIGIN_WHITELIST = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-ROOT_URLCONF = 'magoodgan.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -110,7 +109,7 @@ TEMPLATES = [
 #     os.path.join(BASE_DIR, 'static')
 # ]
 
-WSGI_APPLICATION = 'magoodgan.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -176,7 +175,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'EXCEPTION_HANDLER': 'magoodgan.exceptions.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'config.exceptions.custom_exception_handler'
 }
 
 

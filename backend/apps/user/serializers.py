@@ -6,7 +6,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import UntypedToken, RefreshToken
 
 from .models import User
-from magoodgan.exceptions import NeedsAgreementException, ActivateException
+from common.exceptions import NeedsAgreementException, ActivateException
 
 
 class CheckIDSerializer(serializers.ModelSerializer):
