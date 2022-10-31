@@ -29,7 +29,7 @@ services:
           memory: 128M
     container_name: django
     volumes:
-      - static:/.static_root/
+      - static:/backend/static/
   nginx:
     build:
       context: ./nginx
@@ -47,7 +47,7 @@ services:
     ports:
       - "80:80/tcp"
     volumes:
-      - static:/.static_root/
+      - static:/backend/static/
     depends_on:
       - next
     links:
