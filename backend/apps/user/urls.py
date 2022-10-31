@@ -3,14 +3,13 @@ from rest_framework.routers import DefaultRouter
 
 from .views import *
 
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register('users', UserViewSet)
 
 urlpatterns = [
+    path('check/id', CheckID.as_view()),
+    path('check/email', CheckEmail.as_view()),
+    path('check/nickname', CheckNickname.as_view()),
     path('', include(router.urls)),
-    path('users/id/check', CheckID.as_view()),
-    path('users/email/check', CheckEmail.as_view()),
-    path('auth/activate/<uuid:user>', ActivateUser.as_view()),
-    path('auth/login/check', CheckToken.as_view()),
-    path('auth/login/kakao', KakaoCallback.as_view())
-    ]
+    path('login', LoginView.as_view())
+]
