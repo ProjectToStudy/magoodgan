@@ -12,7 +12,7 @@ services:
           memory: 512M
         reservations:
           cpus: '0.25'
-          memory: 128M
+          memory: 216M
     container_name: next
   django:
     build:
@@ -23,13 +23,13 @@ services:
       resources:
         limits:
           cpus: '0.25'
-          memory: 128M
+          memory: 216M
         reservations:
           cpus: '0.125'
-          memory: 64M
+          memory: 128M
     container_name: django
     volumes:
-      - static:/magoodgan/.static_root/
+      - static:/backend/static/
   nginx:
     build:
       context: ./nginx
@@ -39,16 +39,18 @@ services:
       resources:
         limits:
           cpus: '0.25'
-          memory: 128M
+          memory: 216M
         reservations:
           cpus: '0.125'
-          memory: 64M
+          memory: 128M
     container_name: nginx
     ports:
       - "80:80/tcp"
     volumes:
-      - static:/magoodgan/.static_root/
+      - static:/backend/static/
     depends_on:
       - next
     links:
       - next
+volumes:
+  static:
