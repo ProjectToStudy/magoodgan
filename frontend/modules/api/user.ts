@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil';
 import { useMutation } from '@tanstack/react-query';
 import axios from '.';
-import { idDuplicatedState, joinState } from '../state/user';
+import { duplicatedState, joinState } from '../state/user';
 import { JoinAPIBody } from '../../types/join';
 
 const idDuplicated = async (id: string) => {
@@ -9,16 +9,21 @@ const idDuplicated = async (id: string) => {
     return data;
 };
 
-export const idDuplicatedPostAPI = (userId: string) => {
-    const [state, setState] = useRecoilState(idDuplicatedState);
+const emailDuplicated = async (email: string) => {
+    const { data } = await axios.post('/users/email/check', { email });
+    return data;
+};
 
-    const { mutate } = useMutation(() => idDuplicated(userId), {
+export const duplicatedPostAPI = (type: 'id' | 'email', param: string) => {
+    const [state, setState] = useRecoilState(duplicatedState);
+
+    const { mutate } = useMutation(() => (type === 'id' ? idDuplicated(param) : emailDuplicated(param)), {
         retry: false,
         onSuccess: (data) => {
-            setState({ success: data, fail: null });
+            setState({ ...state, [type]: { success: data, fail: null } });
         },
         onError: (error) => {
-            setState({ ...state, fail: error });
+            setState({ ...state, [type]: { ...state[type], fail: error } });
         },
     });
     return mutate;

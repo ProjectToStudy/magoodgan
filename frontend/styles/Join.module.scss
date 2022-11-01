@@ -1,9 +1,9 @@
 .content {
   align-items: center;
   gap: 45px;
-  min-width: 375px;
-  max-width: 1024px;
-  padding: 48px 40px;
+  width: 100%;
+  max-width: 375px;
+  padding: 48px 15px;
 }
 
 .row_group, .row {
@@ -59,6 +59,7 @@
   }
   & button[name=erase] {
     background: url("/images/erase_text.svg");
+    cursor: pointer;
   }
   & button[name=check] {
     background: url("/images/check_black.svg");
