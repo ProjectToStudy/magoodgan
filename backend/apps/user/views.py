@@ -35,6 +35,11 @@ class CheckEmail(GenericAPIView):
     serializer_class = CheckEmailSerializer
     permission_classes = [AllowAny]
 
+    def check(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data)
+
     def post(self, request, *args, **kwargs):
         """
         이메일 중복 확인
@@ -49,6 +54,11 @@ class CheckNickname(GenericAPIView):
     queryset = User.objects.all()
     serializer_class = CheckNicknameSerializer
     permission_classes = [AllowAny]
+
+    def check(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
         """
