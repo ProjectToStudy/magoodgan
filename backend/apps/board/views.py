@@ -11,3 +11,12 @@ class NoticeBoardViewSet(ModelViewSet):
     serializer_class = NoticeBoardSerializer
     pagination_class = BasicPagination
     permission_classes = [AllowAny]
+
+    def list(self, request, *args, **kwargs):
+        """
+        공지 목록 조회
+
+        ___
+        list
+        """
+        return super().list(request, *args, **kwargs)
