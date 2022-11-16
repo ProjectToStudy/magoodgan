@@ -5,12 +5,12 @@ import { duplicatedState, joinState } from '../state/user';
 import { JoinAPIBody } from '../../types/join';
 
 const idDuplicated = async (id: string) => {
-    const { data } = await axios.post('/users/id/check', { uid: id });
+    const { data } = await axios.post('/check/id', { uid: id });
     return data;
 };
 
 const emailDuplicated = async (email: string) => {
-    const { data } = await axios.post('/users/email/check', { email });
+    const { data } = await axios.post('/check/email', { email });
     return data;
 };
 
@@ -30,7 +30,7 @@ export const duplicatedPostAPI = (type: 'id' | 'email', param: string) => {
 };
 
 const join = async (body: JoinAPIBody) => {
-    const { data } = await axios.post('/users/', body);
+    const { data } = await axios.post('/users', body);
     return data;
 };
 
