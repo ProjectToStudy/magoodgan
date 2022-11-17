@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   next:
     build:
@@ -45,8 +45,7 @@ services:
           memory: 128M
     container_name: nginx
     ports:
-      - '80:80'
-      - '443:443'
+      - "80"
     volumes:
       - static:/backend/static/
     depends_on:
