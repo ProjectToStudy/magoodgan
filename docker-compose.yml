@@ -5,28 +5,12 @@ services:
       context: ./frontend
       dockerfile: frontend.Dockerfile
     image: next-image
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 512M
-        reservations:
-          cpus: '0.25'
-          memory: 216M
     container_name: next
   django:
     build:
       context: ./backend
       dockerfile: backend.Dockerfile
     image: django-image
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 216M
-        reservations:
-          cpus: '0.125'
-          memory: 128M
     container_name: django
     volumes:
       - static:/backend/static/
@@ -35,17 +19,9 @@ services:
       context: ./nginx
       dockerfile: nginx.Dockerfile
     image: nginx-image
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 216M
-        reservations:
-          cpus: '0.125'
-          memory: 128M
     container_name: nginx
     ports:
-      - "80"
+      - "80:80"
     volumes:
       - static:/backend/static/
     depends_on:
