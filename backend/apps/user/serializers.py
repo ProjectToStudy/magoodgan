@@ -74,4 +74,4 @@ class LoginSerializer(serializers.Serializer):
                 'access_token': token.access_token,
             }
         else:
-            raise serializers.ValidationError('')
+            raise serializers.ValidationError('The email or password is wrong.')
