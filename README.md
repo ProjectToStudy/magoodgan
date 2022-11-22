@@ -4,7 +4,7 @@
 
 ### 프로젝트 결과물
 
-- https://magoodgan.p-e.kr
+- https://magoodgan.cf
 
 ### 프로젝트 기간
 
