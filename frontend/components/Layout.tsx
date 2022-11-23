@@ -1,12 +1,20 @@
 import React from 'react';
+import { useRouter } from 'next/router';
+import Header from './organisms/Header';
 
 interface Props {
     children: React.ReactNode;
 }
 
+const noHeaderPages = ['/user/join', '/user/login'];
+
 const Layout = ({ children }: Props) => {
+    const router = useRouter();
     return (
-        <div>{children}</div>
+        <>
+            {!noHeaderPages.includes(router.pathname) && <Header />}
+            {children}
+        </>
     );
 };
 
