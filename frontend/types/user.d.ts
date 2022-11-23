@@ -57,3 +57,8 @@ export type JoinAPIBody = {
     password: string;
     email: string;
 }
+
+export type loginAPIBody = {
+    uid: string;
+    password: string;
+}
