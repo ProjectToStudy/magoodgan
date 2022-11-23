@@ -1,0 +1,94 @@
+.content {
+  display: flex;
+  flex-direction: column;
+}
+.login_container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: calc(100vh - 160px);
+  padding-bottom: 133px;
+}
+.login_inner {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  min-width: 375px;
+  padding: 48px 24px 0;
+}
+.input_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.input_container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  & input {
+    width: 100%;
+    height: 36px;
+    border: none;
+    border-bottom: 1px solid #C6CACF;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    color: black;
+    &::placeholder {
+      color: var(--gray-04);
+    }
+    &:focus {
+      border-color: black;
+      outline: none;
+    }
+  }
+  & button {
+    position: absolute;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: url("/images/erase_text.svg") 24px;
+    cursor: pointer;
+  }
+}
+.button_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  & button {
+    width: 100%;
+    height: 48px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+    color: white;
+    &[name=submit] {
+      background-color: black;
+    }
+    &[name=kakao] {
+      background-color: #FFE812;
+      color: black;
+    }
+    &[name=naver] {
+      background-color: #03C75A;
+    }
+  }
+  & div {
+    display: flex;
+    height: 48px;
+    & a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      height: 100%;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 18px;
+      color: var(--gray-06);
+    }
+  }
+}

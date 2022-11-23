@@ -1,8 +1,8 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useMutation } from '@tanstack/react-query';
 import axios from '.';
-import { duplicatedState, joinState } from '../state/user';
-import { JoinAPIBody } from '../../types/join';
+import { duplicatedState, isLogin, joinState, loginState } from '../state/user';
+import { JoinAPIBody, loginAPIBody } from '../../types/user';
 
 const idDuplicated = async (id: string) => {
     const { data } = await axios.post('/check/id', { uid: id });
@@ -38,6 +38,27 @@ export const joinPostAPI = (body: JoinAPIBody) => {
     const [state, setState] = useRecoilState(joinState);
 
     const { mutate } = useMutation(() => join(body), {
+        retry: false,
+        onSuccess: (data) => {
+            setState({ success: data, fail: null });
+        },
+        onError: (error) => {
+            setState({ ...state, fail: error });
+        },
+    });
+    return mutate;
+};
+
+const login = async (body: loginAPIBody) => {
+    const { data } = await axios.post('/login', body);
+    return data;
+};
+
+export const loginPostAPI = (body: loginAPIBody) => {
+    const [state, setState] = useRecoilState(loginState);
+    const setIsLogin = useSetRecoilState(isLogin);
+
+    const { mutate } = useMutation(() => login(body), {
         retry: false,
         onSuccess: (data) => {
             setState({ success: data, fail: null });
