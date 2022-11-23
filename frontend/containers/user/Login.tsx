@@ -1,8 +1,9 @@
-import { useState, FocusEvent } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useState, FocusEvent, useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import Router from 'next/router';
 import useInputs from '../../hooks/useInputs';
 import { loginPostAPI } from '../../modules/api/user';
-import { loginState } from '../../modules/state/user';
+import { loginState, user } from '../../modules/state/user';
 import LoginComponent from '../../components/user/Login';
 
 const LoginContainer = () => {
@@ -19,6 +20,7 @@ const LoginContainer = () => {
     const { userId, password } = state;
 
     const loginAPIState = useRecoilValue(loginState);
+    const setUser = useSetRecoilState(user);
 
     const loginAPI = loginPostAPI({ uid: userId, password });
 
@@ -35,6 +37,14 @@ const LoginContainer = () => {
     const onSubmit = () => {
         if (userId !== '' && password !== '') loginAPI();
     };
+
+    useEffect(() => {
+        const { success, fail } = loginAPIState;
+        if (success) {
+            setUser(success.result.uid);
+            Router.push('/');
+        }
+    }, [loginAPIState]);
 
     return (
         <LoginComponent
