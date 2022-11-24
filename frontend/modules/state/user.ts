@@ -21,3 +21,13 @@ export const joinState = atom<ApiState>({
     key: 'joinState',
     default: initialState,
 });
+
+export const loginState = atom<ApiState>({
+    key: 'loginState',
+    default: initialState,
+});
+
+export const user = atom<string | null>({
+    key: 'user',
+    default: null,
+});

@@ -4,12 +4,6 @@ import styles from '../../styles/Organisms.module.scss';
 const MobileNavigator = () => {
     return (
         <>
-            <div className={styles.mobile_nav_header}>
-                <span className={styles.title}>MAGOODGAN</span>
-                <Link href="/user/login">
-                    <a className={styles.login_btn}>로그인</a>
-                </Link>
-            </div>
             <div className={styles.mobile_nav_banner}>
                 banner
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputComponentProps, JoinComponentProps } from '../../types/join';
+import { InputComponentProps, JoinComponentProps } from '../../types/user';
 
 import styles from '../../styles/Join.module.scss';
 
