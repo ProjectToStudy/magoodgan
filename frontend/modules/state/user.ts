@@ -27,7 +27,7 @@ export const loginState = atom<ApiState>({
     default: initialState,
 });
 
-export const isLogin = atom<boolean>({
-    key: 'isLogin',
-    default: false,
+export const user = atom<string | null>({
+    key: 'user',
+    default: null,
 });
