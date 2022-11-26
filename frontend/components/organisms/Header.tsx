@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import { user } from '../../modules/state/user';
@@ -8,6 +8,7 @@ import Navigator from './Navigator';
 import styles from '../../styles/Organisms.module.scss';
 
 const Header = () => {
+    const router = useRouter();
     const uid = useRecoilValue(user);
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -15,6 +16,10 @@ const Header = () => {
         if (isMobile) Router.push('/category');
         else setIsOpen(!isOpen);
     };
+
+    useEffect(() => {
+        setIsOpen(false);
+    }, [router.pathname]);
 
     return (
         <header id="header" className={styles.header}>

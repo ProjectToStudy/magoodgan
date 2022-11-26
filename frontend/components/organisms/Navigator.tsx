@@ -5,9 +5,10 @@ const Navigator = ({ isOpen }: { isOpen: boolean }) => {
     return (
         <nav
             className={styles.nav_category}
-            style={{ height: isOpen ? '584px' : '0', padding: isOpen ? '15px' : '0' }}
+            style={{ display: isOpen ? 'flex' : 'none' }}
         >
             <div className={styles.col}>
+                <Link href="/board/notice">마굿간 공지</Link>
                 <Link href="/">이문세 글터</Link>
                 <Link href="/">새내기 인사</Link>
                 <Link href="/">자유 게시판</Link>
