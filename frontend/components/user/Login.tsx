@@ -34,7 +34,7 @@ const LoginComponent = ({
     return (
         <main className={styles.content}>
             <div className={styles.banner}>
-                <img src="/images/login-banner.jpg" />
+                <img src="/images/login-banner.jpg" alt="banner" />
             </div>
             <div className={styles.login_container}>
                 <div className={styles.login_inner}>
@@ -68,6 +68,10 @@ const LoginComponent = ({
                             {isFocus.password && <button type="button" id="password" name="delete" onClick={onDelBtnClick} />}
                             {isValid.password && <img src="/images/check_black.svg" alt="valid" />}
                             <span className={styles.error_msg}>{error.password}</span>
+                        </div>
+                        <div className={styles.login_keep}>
+                            <input type="checkbox" id="keep_login" />
+                            <label htmlFor="keep_login">로그인 상태 유지</label>
                         </div>
                     </div>
                     <div className={styles.button_wrap}>
