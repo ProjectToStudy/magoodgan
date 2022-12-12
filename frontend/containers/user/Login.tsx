@@ -1,10 +1,11 @@
 import { useState, FocusEvent, useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import Router from 'next/router';
 import useInputs from '../../hooks/useInputs';
 import { loginPostAPI } from '../../modules/api/user';
 import { loginState, user } from '../../modules/state/user';
 import LoginComponent from '../../components/user/Login';
+import Modal from '../../components/organisms/Modal';
 
 const LoginContainer = () => {
     const [state, onChange, onDeleteBtnClick] = useInputs({
@@ -23,6 +24,7 @@ const LoginContainer = () => {
     const { userId, password } = state;
 
     const loginAPIState = useRecoilValue(loginState);
+    const resetLoginAPIState = useResetRecoilState(loginState);
     const setUser = useSetRecoilState(user);
 
     const loginAPI = loginPostAPI({ uid: userId, password });
@@ -74,17 +76,20 @@ const LoginContainer = () => {
     }, [loginAPIState]);
 
     return (
-        <LoginComponent
-            inputValue={state}
-            isFocus={isFocus}
-            isValid={isValid}
-            error={errors}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            onInputChange={onChange}
-            onDelBtnClick={onDeleteBtnClick}
-            onSubmit={onSubmit}
-        />
+        <>
+            <LoginComponent
+                inputValue={state}
+                isFocus={isFocus}
+                isValid={isValid}
+                error={errors}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onInputChange={onChange}
+                onDelBtnClick={onDeleteBtnClick}
+                onSubmit={onSubmit}
+            />
+            {loginAPIState.fail && <Modal onConfirmClick={resetLoginAPIState} />}
+        </>
     );
 };
 
