@@ -1,14 +1,25 @@
+@media (min-width: 600px) {
+  .login_container {
+    align-items: flex-end;
+    padding-bottom: 13%;
+  }
+}
 .content {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+.banner {
+  width: 100vw;
+  height: 160px;
+  background-color: black;
+  text-align: center;
 }
 .login_container {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
   width: 100%;
-  height: calc(100vh - 160px);
-  padding-bottom: 133px;
+  height: calc(100vh - 160px - env(safe-area-inset-bottom));
 }
 .login_inner {
   display: flex;
@@ -42,12 +53,25 @@
       border-color: black;
       outline: none;
     }
+    &.error {
+      border-color: #EF5D5D;
+    }
   }
-  & button {
+  .error_msg {
+    position: absolute;
+    bottom: -20px;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #EF5D5D;
+  }
+  & button, & img {
     position: absolute;
     right: 16px;
     width: 24px;
     height: 24px;
+  }
+  & button {
     border: none;
     background: url("/images/erase_text.svg") 24px;
     cursor: pointer;
@@ -89,6 +113,32 @@
       font-weight: 400;
       line-height: 18px;
       color: var(--gray-06);
+    }
+  }
+}
+
+.login_keep {
+  margin-top: 12px;
+  & label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: var(--gray-06);
+    &::before {
+      content: '';
+      width: 24px;
+      height: 24px;
+      background: url("/images/keep_login_check.svg") 24px;
+    }
+  }
+  & input[type=checkbox] {
+    display: none;
+    &:checked + label::before {
+      background: url("/images/keep_login_checked.svg") 24px;
     }
   }
 }
