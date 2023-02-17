@@ -9,7 +9,7 @@ class NoticeBoardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NoticeBoard
-        fields = ('id', 'date', 'title', 'content', 'view', 'nickname', )
+        fields = ('id', 'date', 'title', 'content', 'view', 'nickname', 'fix',)
 
     def get_date(self, obj):
         return obj.date.strftime('%Y.%m.%d %H:%M')
