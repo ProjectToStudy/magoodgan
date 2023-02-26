@@ -78,8 +78,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:8000',
     'http://0.0.0.0:8000',
     'http://0.0.0.0:3000',
-    'https://magoodgan.cf:8000',
-    'https://magoodgan.cf:3000',
+    'https://magoodgan.cf',
     'http://localhost:3000',
     'http://localhost:8000'
 ]
