@@ -25,6 +25,6 @@ class LoginMixin:
         expires = timedelta(days=14)
         max_age = expires.total_seconds()
         response.set_cookie(
-            key='refresh_token', value=serializer.data['refresh_token'],
-            max_age=max_age, expires=expires, httponly=True, secure=True)
+            key='refresh_token', value=serializer.data['refresh_token'], max_age=max_age,
+            expires=expires, httponly=True, secure=True, samesite=None)
         return response
