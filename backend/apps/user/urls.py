@@ -11,5 +11,7 @@ urlpatterns = [
     path('check/email', CheckEmail.as_view()),
     path('check/nickname', CheckNickname.as_view()),
     path('', include(router.urls)),
-    path('login', LoginView.as_view())
+    path('login', LoginView.as_view()),
+    path('login/kakao', KakaoLoginView.as_view()),
+    path('check', CheckToken.as_view())
 ]

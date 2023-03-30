@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import UntypedToken, RefreshToken, AccessToken
 
 from apps.user.models import User
 
@@ -60,6 +62,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.Serializer):
     uid = serializers.CharField()
+    uuid = serializers.UUIDField(read_only=True)
     password = serializers.CharField(write_only=True)
     refresh_token = serializers.CharField(read_only=True)
     access_token = serializers.CharField(read_only=True)
@@ -70,8 +73,53 @@ class LoginSerializer(serializers.Serializer):
             token = TokenObtainPairSerializer.get_token(user)
             return {
                 'uid': attrs['uid'],
+                'uuid': user.uuid,
                 'refresh_token': token,
                 'access_token': token.access_token,
             }
         else:
-            raise serializers.ValidationError('')
+            raise serializers.ValidationError('The email or password is wrong.')
+
+
+class SocialLoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    nickname = serializers.CharField(required=True)
+    profile = serializers.ImageField(required=False, allow_empty_file=True, use_url=False, allow_null=True)
+    gender = serializers.CharField(required=False, allow_null=True)
+    birth = serializers.DateField(required=False, allow_null=True)
+    social = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        try:
+            user = User.objects.get(email=attrs['email'])
+            if not user.is_active:
+                self.context['view'].kwargs['uuid'] = user.uuid
+                raise
+            if user.social != attrs['social']:
+                raise serializers.ValidationError(f'Log in to {user.social}.', code='does_not_match')
+        except User.DoesNotExist:
+            raise serializers.ValidationError('User does not exist.', code='does_not_exist')
+        return attrs
+
+
+class CheckTokenSerializer(serializers.Serializer):
+    access_token = serializers.CharField(required=True)
+    refresh_token = serializers.CharField(required=True)
+    token_class = RefreshToken
+
+    def validate(self, attrs):
+        try:
+            access_token = UntypedToken(attrs['access_token'])
+        except TokenError:
+            try:
+                refresh = self.token_class(attrs['refresh_token'])
+            except TokenError:
+                raise serializers.ValidationError('The refresh token has expired or is not valid.')
+            access_token = str(refresh.access_token)
+        user_id = AccessToken(access_token).payload['user_id']
+        user = User.objects.get(id=user_id)
+        return {
+            'access_token': AccessToken(access_token).token,
+            'uuid': user.uuid,
+            'email': user.email,
+        }

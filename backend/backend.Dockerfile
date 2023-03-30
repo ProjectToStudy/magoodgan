@@ -10,4 +10,4 @@ RUN poetry install --only main
 EXPOSE 8000
 
 CMD python3 manage.py collectstatic
-CMD poetry run gunicorn --bind 0.0.0.0:8000 magoodgan.wsgi:application
+CMD poetry run gunicorn --bind 0.0.0.0:8000 config.wsgi:application

@@ -39,7 +39,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     '0.0.0.0',
-    'magoodgan.p-e.kr',
+    '.magoodgan.cf'
 ]
 
 
@@ -74,14 +74,10 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:8000',
-    'http://0.0.0.0:8000',
-    'http://0.0.0.0:3000',
-    'http://magoodgan.p-e.kr:8000',
-    'http://magoodgan.p-e.kr:3000',
     'http://localhost:3000',
-    'http://localhost:8000'
+    'http://127.0.0.1:3000',
+    'http://0.0.0.0:3000',
+    'https://magoodgan.cf',
 ]
 
 CORS_ALLOW_CREDENTIALS = True

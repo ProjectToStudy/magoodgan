@@ -13,6 +13,7 @@ class NoticeBoard(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     view = models.IntegerField(default=0)
+    fix = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'notice_board'
