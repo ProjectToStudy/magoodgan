@@ -68,3 +68,15 @@ export const loginPostAPI = (body: loginAPIBody) => {
     });
     return mutate;
 };
+
+const check = async (accessToken: string) => {
+    const { data } = await axios.post('/check', { access_token: accessToken });
+    return data;
+};
+
+export const checkPostAPI = (accessToken: string) => {
+    const { mutate } = useMutation(() => check(accessToken), {
+        retry: false,
+    });
+    return mutate;
+};
