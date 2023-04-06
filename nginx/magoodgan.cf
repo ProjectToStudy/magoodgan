@@ -1,7 +1,12 @@
+upstream django {
+    ip_hash;
+    server django:8000;
+}
+
 server {
     server_name api.magoodgan.cf;
 
     location / {
-        proxy_pass http://django:8000;
+        proxy_pass http://django/;
     }
 }
