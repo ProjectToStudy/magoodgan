@@ -1,7 +1,7 @@
+# nginx.dockerfile
 FROM nginx:1.21.4
 
-COPY magoodgan.cf /etc/nginx/sites-available/
-RUN ln -s /etc/nginx/sites-available/magoodgan.cf /etc/nginx/sites-enabled/
+COPY magoodgan.cf /etc/nginx/conf.d/
 COPY nginx.conf /etc/nginx/nginx.conf
 
-CMD nginx -g 'daemon off;'
+CMD ["nginx", "-g", "daemon off;"]
