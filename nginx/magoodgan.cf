@@ -1,7 +1,7 @@
 server {
-        server_name api.magoodgan.cf;
+    server_name api.magoodgan.cf;
 
-        location / {
-                proxy_pass http://django/;
-        }
+    location / {
+        proxy_pass http://django/;
+    }
 }
