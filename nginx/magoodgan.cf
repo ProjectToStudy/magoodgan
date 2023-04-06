@@ -2,6 +2,6 @@ server {
     server_name api.magoodgan.cf;
 
     location / {
-        proxy_pass http://django/;
+        proxy_pass http://django:8000;
     }
 }
