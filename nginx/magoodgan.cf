@@ -1,10 +1,7 @@
 server {
-        listen 80;
-        listen [::]:80;
-
-        server_name api.magoodgan.cf magoodgan.cf;
+        server_name api.magoodgan.cf;
 
         location / {
-                try_files $uri $uri/ =404;
+                proxy_pass http://django/;
         }
 }
