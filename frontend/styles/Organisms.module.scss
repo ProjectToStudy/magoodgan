@@ -16,6 +16,17 @@
   height: 100%;
   padding: 15px;
 }
+.title_area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  & button[name=dropdown] {
+    width: 12px;
+    height: 12px;
+    border: none;
+    background: url("/images/arrow-down.svg") 12px;
+  }
+}
 .nav_category {
   display: flex;
   justify-content: space-around;
@@ -87,11 +98,11 @@
 }
 
 .title {
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 28px;
-    color: black;
-  }
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 28px;
+  color: var(--gray-10);
+}
 .login_btn {
   display: flex;
   justify-content: center;
