@@ -6,13 +6,30 @@ const getList = async (category: string, page: number) => {
     return data;
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export const listGetAPI = (category: string, page: number) => {
     const { data, error } = useQuery(
-        [category, page],
+        [category, page, 'list'],
         () => getList(category, page),
         {
             retry: false,
+            enabled: category !== '',
+        },
+    );
+    return { success: data, fail: error };
+};
+
+const getItem = async (board: string, id: number) => {
+    const { data } = await axios.get(`/${board}/${id}`);
+    return data;
+};
+
+export const itemGetAPI = (board: string, id: number) => {
+    const { data, error } = useQuery(
+        [board, id, 'item'],
+        () => getItem(board, id),
+        {
+            retry: false,
+            enabled: board !== '' && id !== 0,
         },
     );
     return { success: data, fail: error };

@@ -15,6 +15,11 @@ const Home: NextPage = () => {
             </Head>
             <div id="container">
                 <main className={styles.content}>
+                    <div className={styles.notice}>
+                        <p className={styles.name}>공지</p>
+                        <span className={styles.title}>공지사항입니다!</span>
+                    </div>
+                    <img src="/images/main/banner.png" alt="banner" height={400} />
                     <section className={`${styles.section_item} ${styles.item1}`}>
                         <Top3 title="베스트" />
                         <Top3 title="최근 게시글" />
