@@ -1,7 +1,7 @@
 import Axios, { AxiosError } from 'axios';
 
 const axios = Axios.create({
-    baseURL: process.env.NEXT_PUBLIC_CLIENT_URL,
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     withCredentials: true,
 });
 

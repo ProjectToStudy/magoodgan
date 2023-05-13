@@ -71,6 +71,7 @@ const LoginContainer = () => {
         const { success, fail } = loginAPIState;
         if (success) {
             setUser(success.result.uid);
+            window.localStorage.setItem('AT', success.result.access_token);
             Router.push('/');
         }
     }, [loginAPIState]);

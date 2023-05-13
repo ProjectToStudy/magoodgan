@@ -24,9 +24,11 @@ const Header = () => {
     return (
         <header id="header" className={styles.header}>
             <div className={styles.header_inner}>
-                <div>
-                    <Link href="/" className={styles.title}>마굿간</Link>
-                    <button type="button" onClick={onArrowClick}>화살표</button>
+                <div className={styles.title_area}>
+                    <Link href="/">
+                        <a className={styles.title}>마굿간</a>
+                    </Link>
+                    <button type="button" name="dropdown" onClick={onArrowClick} />
                 </div>
                 <Link href="/user/login">
                     {uid ? (
