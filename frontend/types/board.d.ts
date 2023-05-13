@@ -7,9 +7,19 @@ export interface BoardListBody {
     view: number;
 }
 export interface PostItemProps {
+    link: string;
     category: string;
     title: string;
     nickname: string;
     date: string;
     view: number;
+}
+export interface ContentsProps {
+    id: number,
+    date: string,
+    title: string,
+    content: string,
+    view: number,
+    nickname: string,
+    fix: boolean
 }

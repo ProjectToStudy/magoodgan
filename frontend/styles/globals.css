@@ -38,7 +38,9 @@ h1, h2, h3, h4, h5, h6 {
 
 #container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 main {
   display: flex;
